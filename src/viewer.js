@@ -24,6 +24,7 @@ define(['./components/platform', './components/event', './components/css', './co
                 title: encodeURIComponent(document.title)
             });
             this.setupEventAction();
+            // this.aClick();
         },
         isIframed: win !== top,
         /** 
@@ -73,6 +74,25 @@ define(['./components/platform', './components/event', './components/css', './co
                 eventAction.excute('tap', event.target, event);
             });
         }
+
+        /**
+         * handle tag a
+         */
+        // aClick: function() {
+        //     if(this.isIframed) {
+        //         var tagA = document.getElementsByTagName('a');
+        //         var index = 0;
+        //         var self = this;
+        //         for(index = 0; index < tagA.length; index ++) {
+        //             tagA[index].addEventListener('click', function(event) {
+        //                 event.preventDefault();
+        //                 self.sendMessage('mibm-jumplink', {
+        //                     'url': this.href
+        //                 });
+        //             });
+        //         }
+        //     }
+        // }
     };
 
     Event.mixin(Viewer);

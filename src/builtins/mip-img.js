@@ -1,5 +1,5 @@
-define(['util', 'naboo', 'viewport'], 
-    function(util, naboo, viewport){
+define(['util', 'naboo', 'viewport', 'components/platform'], 
+    function(util, naboo, viewport, platform){
 
     var customElem = require('customElement').create();
     var Gesture = require('components/gesture');
@@ -16,6 +16,11 @@ define(['util', 'naboo', 'viewport'],
             left: 0,
             top: top
         }
+    };
+
+    var getImgOffset = function (img) {
+        var imgOffset = rect.getDomOffset(img);
+        return imgOffset;
     };
 
     // 创建弹层 dom
@@ -43,6 +48,12 @@ define(['util', 'naboo', 'viewport'],
             if (img.width + img.naturalWidth === 0) {
                 return;
             }
+            var onResize = function () {
+                imgOffset = getImgOffset(img);
+                css(popupImg, imgOffset);
+                naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
+            };
+            window.addEventListener('resize', onResize);
             if (!popup) {
                 popup = createPopup(element, img);
                 popupBg = popup.querySelector('.mip-img-popUp-bg');
@@ -50,23 +61,30 @@ define(['util', 'naboo', 'viewport'],
 
                 popup.addEventListener('click', function () {
                     naboo.css(popupBg, {opacity: 0}).start();
-                    naboo.css(popupImg, rect.getDomOffset(img)).start(function () {
-                        css(img, 'opacity', '1');
+                    naboo.css(popupImg, getImgOffset(img)).start(function () {
+                        css(img, 'visibility', 'visible');
                         css(popup, 'display', 'none');
                     });
                 }, false);
             }
 
-            var imgOffset = rect.getDomOffset(img);
+            var imgOffset = getImgOffset(img);
 
             css(popupImg, imgOffset);
             css(popupBg, 'opacity', 1);
             css(popup, 'display', 'block');
 
             naboo.css(popupImg, getPopupImgPos(imgOffset.width, imgOffset.height)).start();
-            css(img, 'opacity', 0);
+            css(img, 'visibility', 'hidden');
         }, false);
     };
+
+    var bindLoad = function (element, img) {
+        img.addEventListener('load', function () {
+            element.classList.add('mip-img-loaded');
+        });
+    };
+
     var firstInviewCallback = function () {
         var _img = new Image();
         this.applyFillContent(_img, true);
@@ -82,6 +100,7 @@ define(['util', 'naboo', 'viewport'],
         if (ele.hasAttribute('popup')) {
             bindPopup(ele, _img);
         }
+        bindLoad(ele, _img);
     };
     customElem.prototype.firstInviewCallback = firstInviewCallback;
 

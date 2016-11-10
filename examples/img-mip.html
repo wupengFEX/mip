@@ -1,39 +1,98 @@
-
-
 <!DOCTYPE html>
 <html lang="zh">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
-        <title>链接测试</title>
-        <link rel="stylesheet" type="text/css" href="/dist/css/mipmain.css">
+        <title>图片测试</title>
+        <link rel="stylesheet" type="text/css" href="../dist/css/mipmain.css">
+        <style>
+            body {
+                background-color: #dcf4fb;
+            }
+            h1 {
+                width: 100%;
+                text-align: center;
+                padding: 1rem;
+            }
+            p {
+                padding: 0.5rem;
+            }
+        </style>
     </head>
     <body>
         <div class="main">
-            <mip-img width="350" height="263"
+            <h1>mip-image 测试</h1>
+            <p>我，却偏不作声，远山上不起霭，我们应得感谢上苍的是他不可度量的心裁，他说的话我不懂，认识你，上山或是下山，流，她们又讲你怎样喜欢拿着一根短棍站在 桌上摹仿音乐会的导师，那才是你福星高照的时候，但已往的教训，亲口尝味，在这道上遭受的，流入凉爽的橄榄林中，但你要它们的时候，我只能问！</p>
+            <p></p>
+            <p>Lorem ipsum dolor sit amet, eos suscipit philosophia in, te tractatos intellegat eam. Mandamus mediocrem reprehendunt eum eu, cu pertinax ocurreret his. Usu an legimus petentium, et vis sumo vivendo convenire, id eos dicit primis utamur. Sit enim eripuit ad, adhuc mundi sea ne, legere assentior ius ex. Usu ei denique lobortis.</p>
+            <p></p>
+            <mip-img width="350" height="218"
                 class="mip-img" 
                 popup 
                 alt="baidu mip img" 
-                src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
+                src="http://image.tianjimedia.com/uploadImages/2013/256/Z30NC8IU5KAN.jpg">
             </mip-img>
-            <p class="mip-img-subtitle">带图片标题的类型</p>
-            <mip-img  layout="responsive" width="350" height="263"
+            <p class="mip-img-subtitle">图片测试-非响应式布局</p>
+            <p></p>
+            <mip-img layout="responsive" width="230" height="129"
                 class="mip-img" 
                 popup 
                 alt="baidu mip img" 
-                src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
+                src="http://ww3.sinaimg.cn/large/b1e6d572gw1f8xlwaamsng206e03lqv5.gif">
             </mip-img>
-            <p class="mip-img-subtitle">带图片标题的类型</p>
-            <mip-img layout="responsive" width="350" height="263"
+            <p class="mip-img-subtitle">一张动图</p>
+            <p></p>
+            <mip-img layout="responsive" width="720" height="1212"
                 class="mip-img" 
                 popup 
                 alt="baidu mip img" 
-                src="http://ztd00.photos.bdimg.com/ztd/w%3D350%3Bq%3D70/sign=e3bb1c4b97ef76c6d0d2fd2ead2d8cc7/f703738da9773912b57d4b0bff198618367ae205.jpg">
+                src="https://www.mipengine.org/static/img/P1x1_ebbe05d.jpg">
             </mip-img>
-            <p class="mip-img-subtitle">带图片标题的类型</p>
+            <p class="mip-img-subtitle">图片-响应式布局</p>
+            <p></p>
+            <mip-img layout="responsive" width="1280" height="800"
+                class="mip-img"
+                alt="baidu mip img" 
+                src="404">
+            </mip-img>
+            <p class="mip-img-subtitle">无法加载的图</p>
+            <p></p>
+            <p><a href="img-mip.html">跳转</a></p>
+            <p></p>
+            <mip-img width="80" height="80"
+                class="mip-img" 
+                popup 
+                alt="baidu mip img" 
+                src="data:image/jpeg;base64,R0lGODlhUABQAPf/AOPNUPbeVjEyNvLeYykqMranUyAiKf/sVigoKuTMVP/rVP/mUv7jVRsdKZ6RTEJDTC0tM4Z7RUpJQyYmKJ6WcmRgRkhHQn51Qzk6Pv/vVv/uVCMlMv3mVWViVVFPRG1qWc67VikoKDAxOSwsK09OSiQlLP/tVfzpVv/nV/7mUf7lU/XhXmJeSujVZiMkLTs8Qk5MPz09Ph4gKzU1NiYmKy0vNiYoMpaNWyoqLCcoLVVRPVBOPkZFPSIkKy8vMCwsLigoLDc3OyUlKisrK/7kVS0tLHp6ev/lVf/nVSoqK//oVf/pVf7kVC0sLP/lVP/pVioqKi0tLSsrKv/mVf/qV/3jVP/qVv/rVv3kVCkpKf/nVP/kVf/mVI6ETKmdXCwrK//pV9DAZ4F5U//kVObUa5qTaKCUVndvQ/vmXf/xYEE/Or6wY+TOU/vlZWFcOzQzM97KV5uOS/PpW/3uVyssLMu4UujUYEJBPqueVf/lViUmKe7WUfTbW//oV4uDVuXQWkNAOpuSXvjnV+3UUv3iVB8gI1lWSiwtLGlmTPfhVbytXC8xONvLakNGUSkqLCkpKuPOXtC7VpKKZGpmVvvlaOjQU+7WVmpjQraoY/vmWvPebbSlXPzjXbWkSnx1VOHLVD08OuPNVCcnKPjhZefRV/rlYf3kYXdySX53Tod+T5yRUf/wUv/yXdjFWt3JXSkqNf3nVv7nVC4tLJKNcfDaZjc4OfDdZDg4NFxXP6ycTI2FWcu4VIh8QsCwV8a4Zs2+Zf/oVNnGY//pVJOGR4+DRGNdQ/7qVyoqKcm3WKiaVK2fUzIyNKaeaOHQYoR/Yo2GYzI0Ov/qWCUlKV1aUCAiLunYZiYnK8u5Wc+9XPPaWPTdWf7pV//vUysqKv7lVaCSTqWXTouCUIyDVHNtTx8iMOfSXigpMCkqLf3kVigqLysrL+jTXevUWnh0Wv7jUWNgUIuASPzkWf/mWL+yZ/vnVZ+UW//uXO7WUvzsVf3iVWhjTWllSf3jVbCwsCwsLP///yH5BAEAAP8ALAAAAABQAFAAAAj/AP8J7EewoMGDCBMqXMiwoUKBA/sZ8UexosWLPnxc3Mixo8ePH40QHAjyYpIZMX4MKcmypUt//f5JfOlvCBSaOHNWFNlPp8+fLgkCHUp0o1CaQ7IUXXrxqMshEGokYUrVKcsRevY5wyCK6lKrJa3d6jTgGTSlXoeC/ZiEwIVBJmy1I3Az7c+1HnvsqIOEiIJghoCMsOsTL0drELoEQMKPARVMGBAQ1mn44ogeMCJROcKPnxM+49KtnEyzskUEBFIFWNKZHxEkiqA9Il26Z0kaMXplcNKa3xF2k8zJkkK7ZeUmFKH0MARHQ+/OKHw1oiENAYJHSYYMHl284tomQ0QZ/5CxQQY5VNoUPOenpRSFB0EE2KAmo0GDQmi7UwT7aPwiD8Vc4sYZu+RBxHpY9EHLPMqAE8cwxPByQQcvHMNdcU4d8sMyOvBSQCukVALAPUwcuF5jWkQDBhXGnHACPpzM8kJ+3TllDSDfhJLIE1Y84eMSnJ3YWRVOTIEEEkqYgIYXd5wzmH4w2ebPI8tEsIcCR5go5JZMWPGHH7U8cmGNUkYxxBvwWALMlmwusA02+vgwFZTeSelPEY+IoMsAwjDB5nNECJPJJhLkQByddV5UBA01ONPCFVz82RkWsNhxAwZCjEnnd6LY8EEYK/jJZhUHVPPBBhM8iWiiGzURgjkPUP9gigqjHtACCw3QuGqUHoUggCRtjPGnNwsg40EJmm5q50XWsLCOEpLyk0IazIjQ1a77LVvREOqogg5vkhLCDRnTZIotrxxNYAEISjAQLT/usHIDBJJhi9cXLpySzRTrEaGFE1p2ls8qv0iAAB32autPFq84wMEWvR2hhDyajILEFBC3tgAliOSQLJnpBlFALAcywIUV8ZQTCAnv4JEACkqYyIQ9YhDwMYbaFtEDDyAAucQcK1wjjgXqOKLODBXkwgYHQBJhQj3LzLnqWkUYoAMbGQgCSTLjYGDAtTXRAAEuDnxCzxUZrAGKIwlvNIILFbDhSjgw2NCAKEVs9EgPBOzOYEYzcjBicNuW/UBCB2q4IEMWRSDHURGiyEAAD56UYQEOhF8UxQ8uGMD4VRMYUIIAy0QRxa6GSdFN3i4VUQQUotyM87l2mUZ7YQrfDpTtuuPEe+8v/Q68cbkP73vxxgePfPLEM7/78s6DJHz0HE1PfVPQX1999tpj331t3ysfflDcj2/99+d3n77261/fPvXvRx+/8/MzX3/y9xuf//D7A99/7//TXQBvN0DaFfBcBJnI+EAiEpksUHoRUeADLcITiMjEIRjMoAY3WBCIBAQAOw==">
+            </mip-img>
+            <p class="mip-img-subtitle">base64 的图</p>
+            <p><br><center>~~~~~~~~~~~~~</center><br></p>
+            <mip-img layout="responsive" width="300" height="168"
+                class="mip-img" 
+                popup 
+                alt="baidu mip img" 
+                src="http://ww3.sinaimg.cn/large/b1e6d572gw1f8xlw6jda6g208c04ou0x.gif">
+            </mip-img>
+            <p class="mip-img-subtitle">另一张动图</p>
+            <p></p>
+            <mip-img layout="responsive" width="2048" height="1365"
+                class="mip-img" 
+                popup 
+                alt="baidu mip img" 
+                src="http://ww1.sinaimg.cn/large/9a6fe1dcgw1f5c49k0uf6j21kw11xdpr.jpg">
+            </mip-img>
+            <p class="mip-img-subtitle">放一张花姐</p>
+            <p></p>
+            <mip-img layout="responsive" width="1280" height="7235"
+                class="mip-img"
+                alt="baidu mip img" 
+                src="http://ww2.sinaimg.cn/large/c082849cgw1f8xbhojq1fj20zk5kz1ky.jpg">
+            </mip-img>
+            <p class="mip-img-subtitle">一张长图，没有弹出功能</p>
+            <p></p>
         </div>
 
-        <script src="/dist/mipmain.js"></script>
+        <script src="../dist/mipmain.js"></script>
 
     </body>
 </html>
