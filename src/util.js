@@ -1,5 +1,5 @@
 define(['./components/fn', './components/dom', './components/dom-event', './components/css',
-    './components/rect'], function (fn, dom, event, css, rect) {
+    './components/rect', 'components/gesture'], function (fn, dom, event, css, rect, gesture) {
     'use strict';
     /**
      *  页面资源url转成可用的cache url
@@ -31,6 +31,7 @@ define(['./components/fn', './components/dom', './components/dom-event', './comp
         dom: dom,
         event: event,
         rect: rect,
+        Gesture: gesture,
         css: css
     }
 });
