@@ -1,4 +1,4 @@
-define(['util', 'naboo', 'viewport', 'components/platform'], 
+define(['util', 'naboo', 'viewport'], 
     function(util, naboo, viewport, platform){
 
     var customElem = require('customElement').create();
