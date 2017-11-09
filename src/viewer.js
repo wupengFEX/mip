@@ -38,6 +38,13 @@ define(function (require) {
             // handle preregistered  extensions
             this.handlePreregisteredExtensions();
 
+            // add normal scroll class to body. except ios in iframe.
+            // Patch for ios+iframe is default in mip.css
+            if (!platform.needSpecialScroll) {
+                document.documentElement.classList.add('mip-i-android-scroll');
+                document.body.classList.add('mip-i-android-scroll');
+            }
+
             if (this.isIframed) {
                 this.patchForIframe();
                 // proxy links
@@ -62,14 +69,6 @@ define(function (require) {
          * Patch for iframe
          */
         patchForIframe: function () {
-            // When page in an iframe and browser is IOS,
-            // page can not be scrollable. So we need
-            // set the style to be `height: 100%; overflow: auto`
-            // to solve this problem.
-            if (!platform.needSpecialScroll) {
-                document.documentElement.classList.add('mip-i-android-scroll');
-                document.body.classList.add('mip-i-android-scroll');
-            }
 
             // Fix iphone 5s UC and ios 9 safari bug.
             // While the back button is clicked,
@@ -125,6 +124,7 @@ define(function (require) {
             var eventAction = this.eventAction = new EventAction();
             if (hasTouch) {
                 // In mobile phone, bind Gesture-tap which listen to touchstart/touchend event
+                /* istanbul ignore next */
                 this._gesture.on('tap', function (event) {
                     eventAction.execute('tap', event.target, event);
                 });
@@ -134,6 +134,11 @@ define(function (require) {
                     eventAction.execute('tap', event.target, event);
                 }, false);
             }
+
+            /* istanbul ignore next */
+            util.event.delegate(document, 'input', 'change', function (e) {
+                eventAction.execute('change', event.target, event);
+            });
         },
 
         /**
@@ -210,6 +215,9 @@ define(function (require) {
                         lastDirect = dist/Math.abs(dist);
                         self.sendMessage('mipscroll', { 'direct': direct, 'dist': dist});
                     }
+                } 
+                else if (scrollTop === 0) {
+                    self.sendMessage('mipscroll', { 'direct': 0 });
                 }
             }
             wrapper.addEventListener('touchmove',function(event){
