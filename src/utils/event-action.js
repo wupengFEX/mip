@@ -1,3 +1,4 @@
+
 define(function (require) {
     'use strict';
 
@@ -10,7 +11,7 @@ define(function (require) {
      * @inner
      * @type {RegExp}
      */
-    var PARSE_REG = /^(\w+):([\w-]+)\.([\w-]+)(?:\(([^\)]+)\))?$/;
+    var PARSE_REG = /^(\w+):([\w-]+)\.([\w-$]+)(?:\(([^\)]+)\))?$/;
 
     /**
      * Regular for checking elements.
@@ -65,10 +66,15 @@ define(function (require) {
          * @param {Object} action event action
          */
         handleMIPTarget: function (action) {
+            /* istanbul ignore next */
             if (!action) {return};
             switch (action.handler) {
                 case 'setData':
-                    MIP.setData(action.arg);
+                    MIP.setData(action, 1);
+                    break;
+                case '$set':
+                    MIP.$set(action, 1);
+                    break;
             }
         },
 
@@ -78,6 +84,7 @@ define(function (require) {
          * @param {Function} handler
          */
         addGlobalTarget: function (name, handler) {
+            /* istanbul ignore next */
             if (!name) {return;}
             this.globalTargets[name] = handler;
         },
@@ -143,9 +150,9 @@ define(function (require) {
                 var action = actions[i];
                 var globalTarget = this.globalTargets[action.id];
                 if (globalTarget) {
-                    return globalTarget(action);
+                    globalTarget(action);
+                    continue;
                 }
-
                 var target = this.getTarget(action.id);
                 if (this.checkTarget(target)) {
                     this.executeEventAction(action, target);

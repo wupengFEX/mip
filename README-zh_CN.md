@@ -26,7 +26,7 @@
 		<img src='http://issuestats.com/github/mipengine/mip/badge/pr?style=flat' title='Pull Request closed' alt='Pull Request closed'>
 	</a>
 	<a href='https://opensource.org/licenses/MIT'>
-		<img src='https://img.shields.io/github/license/mashape/apistatus.svg'  title='license' alt='license'>
+		<img src='https://img.shields.io/github/license/mipengine/mip.svg'  title='license' alt='license'>
 	</a>
 </p>
 <p align='center'>
@@ -78,6 +78,7 @@ MIP（移动网页加速器)能够优化网页JS和资源加载，达到加速�
 4. 符合[Fecs](http://fecs.baidu.com/demo)编码规范
 
 ## License
+
 [MIT](https://github.com/mipengine/mip/blob/master/LICENSE)
 
 Copyright (c) 2015-present, Baidu Inc.

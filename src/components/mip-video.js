@@ -7,13 +7,13 @@
 define(function (require) {
     var customElem = require('customElement').create();
     var viewer = require('viewer');
+    var util = require('util');
 
     var videoAttributes = [
         'ads',
         'src',
         'controls',
         'loop',
-        'autoplay',
         'autoplay',
         'autobuffer',
         'crossorigin',
@@ -23,27 +23,40 @@ define(function (require) {
         'poster',
         'width'
     ];
+    var windowInIframe = viewer.isIframed;
 
     customElem.prototype.firstInviewCallback = function () {
         this.attributes = getAttributeSet(this.element.attributes);
+        this.sourceDoms = this.element.querySelectorAll('source');
+        this.src = this.attributes.src;
 
-        // 窗口是否是https
+        // if window is https
         var windowProHttps = !!window.location.protocol.match(/^https:/);
-        // 判断src是否https
-        var videoProHttps = !!this.attributes.src.match(/^https:/);
-        // 页面https         + 视频https  = 当前页播放
-        // 页面https(在iframe里) + 视频http    = 跳出播放
-        // 页面https(其它)   + 视频http    = 当前页播放（非mip相关页）
-        // 页面http          + 视频任意    = 当前页播放
+        // if video source is https
+        var sourceIsHttps = true;
+        if (!this.sourceDoms.length) {
+            sourceIsHttps = false;
+        }
+        Array.prototype.slice.apply(this.sourceDoms).forEach(function (node) {
+            if (!node.src.match(/^https:|^\/\//)) {
+                sourceIsHttps = false;
+            }
+        });
+        var videoProHttps = (this.src && this.src.match(/^https:|^\/\//))
+                            || (this.sourceDoms && sourceIsHttps);
 
-        // 如果非iframe嵌套时，应该与协议无关 || 如果src为https ||  窗口内 + video http + 窗口http
-        if (!viewer.isIframed || videoProHttps || (viewer.isIframed && !videoProHttps && !windowProHttps)) {
+        // page ishttps         + video is https    = renderInView
+        // page ishttps(in iframe) + video is http    = renderPlayElsewhere
+        // page ishttps(else)   + video is http     = renderInView（not mip）
+        // page ishttp          + random video      = renderInView
+        // page not iframe || video src is https ||  video http + page http
+        if (!windowInIframe || videoProHttps || (windowInIframe && !videoProHttps && !windowProHttps)) {
             this.videoElement = this.renderInView();
         }
         else {
-            // 处理在窗口内，视频或者窗口非https的情况
             this.videoElement = this.renderPlayElsewhere();
         }
+
         this.applyFillContent(this.videoElement, true);
     };
 
@@ -53,10 +66,11 @@ define(function (require) {
         for (var k in this.attributes) {
             if (this.attributes.hasOwnProperty(k) && videoAttributes.indexOf(k) > -1) {
                 videoEl.setAttribute(k, this.attributes[k]);
-                videoEl.setAttribute('playsinline', 'playsinline');
-                videoEl.setAttribute('webkit-playsinline', 'webkit-playsinline');
             }
         }
+
+        videoEl.setAttribute('playsinline', 'playsinline');
+        videoEl.setAttribute('webkit-playsinline', 'webkit-playsinline');
         Array.prototype.slice.apply(this.element.childNodes).forEach(function (node) {
             // FIXME: mip layout related, remove this!
             if (node.nodeName.toLowerCase() === 'mip-i-space') {
@@ -70,43 +84,47 @@ define(function (require) {
 
     // Render the `<a>` element with poster and play btn, and append to `this.element`
     customElem.prototype.renderPlayElsewhere = function () {
-        var self = this;
         var videoEl = document.createElement('div');
+        var urlSrc;
         videoEl.setAttribute('class', 'mip-video-poster');
-        if (self.attributes.poster) {
-            videoEl.style.backgroundImage = 'url(' + self.attributes.poster + ')';
+        if (this.attributes.poster) {
+            videoEl.style.backgroundImage = 'url(' + this.attributes.poster + ')';
             videoEl.style.backgroundSize = 'cover';
-        }
-        else {
-            videoEl.style.background = '#333';
         }
 
         var playBtn = document.createElement('span');
         playBtn.setAttribute('class', 'mip-video-playbtn');
         videoEl.appendChild(playBtn);
-        videoEl.dataset.videoSrc = self.attributes.src;
-        videoEl.dataset.videoPoster = self.attributes.poster;
-        videoEl.addEventListener('click', function () {
-            self.sendVideoMessage(videoEl);
-        }, false);
-        self.element.appendChild(videoEl);
-        return videoEl;
-    };
+        videoEl.dataset.videoSrc = this.attributes.src;
+        videoEl.dataset.videoPoster = util.parseCacheUrl(this.attributes.poster);
+        videoEl.addEventListener('click', sendVideoMessage, false);
 
-    /**
-     * Send message
-     *
-     * @param {NamedNodeMap} attributes the attribute list, spec: https://dom.spec.whatwg.org/#interface-namednodemap
-     * @return {Object} the attribute set, legacy:
-     */
-    customElem.prototype.sendVideoMessage = function (videoEl) {
-        if (viewer.isIframed) {
-            // mip_video_jump 为写在外层的承接方法
-            viewer.sendMessage('mip_video_jump', {
-                poster: videoEl.dataset.videoPoster,
-                src: videoEl.dataset.videoSrc
-            });
+        // make sourceList, send to outer iframe
+        var sourceList = [];
+        Array.prototype.slice.apply(this.sourceDoms).forEach(function (node) {
+            var obj = {};
+            obj[node.type] = node.src;
+            sourceList.push(obj);
+        });
+
+        if (!sourceList.length) {
+            urlSrc = videoEl.dataset.videoSrc;
         }
+        else {
+            urlSrc = JSON.stringify([videoEl.dataset.videoSrc, sourceList]);
+        }
+
+        function sendVideoMessage() {
+            if (windowInIframe) {
+                // mip_video_jump is written outside iframe
+                viewer.sendMessage('mip_video_jump', {
+                    poster: videoEl.dataset.videoPoster,
+                    src: urlSrc
+                });
+            }
+        }
+        this.element.appendChild(videoEl);
+        return videoEl;
     };
 
     /**
