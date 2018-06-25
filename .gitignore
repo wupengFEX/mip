@@ -9,4 +9,4 @@ Thumbs.db
 *.swp
 *.gz
 *.~
-./**/package-lock.json
+./package-lock.json
